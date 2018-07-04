@@ -13,9 +13,11 @@
 ActiveRecord::Schema.define(version: 20180704083538) do
 
   create_table "buildings", force: :cascade do |t|
-    t.string "address"
     t.string "name"
     t.string "country"
+    t.string "address"
+    t.integer "rent_per_floor"
+    t.integer "number_of_floors"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -27,18 +29,22 @@ ActiveRecord::Schema.define(version: 20180704083538) do
   end
 
   create_table "employees", force: :cascade do |t|
+    t.integer "company_id"
     t.string "name"
     t.string "title"
-    t.integer "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_employees_on_company_id"
   end
 
   create_table "offices", force: :cascade do |t|
     t.integer "building_id"
     t.integer "company_id"
+    t.integer "floor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["building_id"], name: "index_offices_on_building_id"
+    t.index ["company_id"], name: "index_offices_on_company_id"
   end
 
 end
